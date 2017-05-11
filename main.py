@@ -73,7 +73,12 @@ class show_api_list:
                 </tr>
         </form>
         """
-        return header + filter + end
+
+        show_filted = """
+
+        """
+
+        return header + filter + show_filted + end
 
 class filter_apis:
     def POST(self):
