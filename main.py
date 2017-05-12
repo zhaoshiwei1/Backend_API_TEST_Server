@@ -120,7 +120,7 @@ class show_api_list:
                         <select name = "module">
                             <option value="01">----------ORDER----------</option>
                             <option value="02">----------CHARGE----------</option>
-                            <option value="03" selected="selected">----------SETTLEMENT----------</option>
+                            <option value="03">----------SETTLEMENT----------</option>
                             <option value="04">----------PAY----------</option>
                             <option value="05">----------UC----------</option>
                         </select>
