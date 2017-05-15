@@ -22,3 +22,10 @@ class db_action:
             self.db.cu.execute("UPDATE common SET IF_VALID ='NO' WHERE ID =" + "\'"+ id + "\'")
         elif result_set[0][2] == "NO":
             self.db.cu.execute("UPDATE common SET IF_VALID ='YES' WHERE ID =" + "\'"+ id + "\'")
+    def get_max_id(self):
+        l = []
+        self.db.cu.execute("SELECT DISTINCT ID FROM common")
+        result_set = self.db.cu.fetchall()
+        for m in result_set:
+            l.append(int(m[0]))
+        return max(l)
