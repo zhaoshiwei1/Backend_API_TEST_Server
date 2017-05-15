@@ -88,7 +88,7 @@ class show_api_list:
         show_default_filted +="""<th>Action</th></tr>"""
         for ret in result_set:
             show_default_filted = show_default_filted + """<tr>"""
-            show_default_filted = show_default_filted + """<form action = "/change_status" method = "post"><td align = "left"><input type = "text" name = "id" value ="""+str(ret[0]) + """ disabled="true" >"""
+            show_default_filted = show_default_filted + """<td align = "right"><form action = "/change_status" method = "post"><button TYPE = "submit">CHANGE</button><input TYPE = "text" NAME = "id" value ="""+str(ret[0]) + """ disabled="true" ></form>"""
             show_default_filted = show_default_filted + """</td>"""
             show_default_filted = show_default_filted + """<td align = "left">"""
             show_default_filted = show_default_filted + ret[1]
@@ -99,7 +99,7 @@ class show_api_list:
             show_default_filted = show_default_filted + """<td align = "left">"""
             show_default_filted = show_default_filted + ret[3]
             show_default_filted = show_default_filted + """</td>"""
-            show_default_filted = show_default_filted + """<td><button type = "submit">更改接口有效性</button></td></form></tr>"""
+            show_default_filted = show_default_filted + """<td></tr>"""
 
         show_default_filted += """</table>"""
         return header + filter +show_default_filted + end
@@ -143,15 +143,15 @@ class show_api_list:
             <tr>
         """
         for name in col_name_list:
-            show_default_filted = show_default_filted + """<th align="left">"""
+            show_default_filted = show_default_filted + """<th align="center">"""
             show_default_filted = show_default_filted + name
             show_default_filted = show_default_filted + """</th>"""
 
         show_default_filted +="""<th>Action</th></tr>"""
 
         for ret in result_set:
-            show_default_filted = show_default_filted + """<tr><form action = "/change_status" method = "post">"""
-            show_default_filted = show_default_filted + """<td align = "left"><input type = "text" name = "id" value ="""+str(ret[0]) + """ disabled="true" >"""
+            show_default_filted = show_default_filted + """<tr>"""
+            show_default_filted = show_default_filted + """<td align = "right"><form action = "/change_status" method = "post"><button TYPE = "submit">CHANGE</button><input TYPE = "text" NAME = "id" value ="""+str(ret[0]) + """ disabled="true" ></form>"""
             show_default_filted = show_default_filted + """</td>"""
             show_default_filted = show_default_filted + """<td align = "left">"""
             show_default_filted = show_default_filted + ret[1]
@@ -162,18 +162,18 @@ class show_api_list:
             show_default_filted = show_default_filted + """<td align = "left">"""
             show_default_filted = show_default_filted + ret[3]
             show_default_filted = show_default_filted + """</td>"""
-            show_default_filted = show_default_filted + """<td><button type = "submit">更改接口有效性</button></td></form></tr>"""
+            show_default_filted = show_default_filted + """<td></tr>"""
 
         show_default_filted += """</table>"""
         return header + filter +show_default_filted + end
 
 class change_status:
     def POST(self):
-        d_a = db_action()
         i = web.input('id')
+        # d_a = db_action()
         print i.id
-        d_a.change_api_status(self, i.id)
-        return web.seeother('/show_apis')
+        # d_a.change_api_status(self, i.id)
+        return web.seeother('/')
 
 if __name__=="__main__":
     app = web.application(urls,globals())
