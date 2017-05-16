@@ -19,8 +19,10 @@ class db_action:
         rec = self.db.cu.execute("SELECT API_NAME, API_CMT, IF_VALID FROM general WHERE ID =" + "\'"+ id + "\'")
         result_set = self.db.cu.fetchall()
         if result_set[0][2] == "YES":
+            print "branch YES"
             self.db.cu.execute("UPDATE general SET IF_VALID ='NO' WHERE ID =" + "\'"+ id + "\'")
         elif result_set[0][2] == "NO":
+            print "branch NO"
             self.db.cu.execute("UPDATE general SET IF_VALID ='YES' WHERE ID =" + "\'"+ id + "\'")
     def get_max_id(self):
         l = []
