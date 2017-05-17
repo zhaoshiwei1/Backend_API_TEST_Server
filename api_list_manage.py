@@ -4,8 +4,8 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
 
-def get_no_filted_html_string():
-    str = """
+def get_no_filted_html_string(result_set):
+    head_string = """
     <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
     <HTML>
         <HEAD>
@@ -35,10 +35,27 @@ def get_no_filted_html_string():
                         </td>
                     </tr>
             </form>
+            """
+
+    result_string = """
+        <table width = "45%" border = "0">
+                    <tr>
+                        <th align = "left">编号</th>
+                        <th align = "left">名称</th>
+                        <th align = "left">备注</th>
+                        <th align = "left">有效性</th>
+                    </tr>
+    """
+    for result in result_set:
+        result_string += """<tr><td align = "left">"""+ result[0]+"""</td><td align = "left">"""+result[1]+"""</td><td align = "left">"""+result[2]+"""</td><td align = "left">"""+result[3]+"""</td>"""
+        result_string += """<td><form action = "/change_status" method = "post"><input type = "text" name = "r_id" value ="""+ "\""+ result[0]+"\""+""" style="display:none"><button type = "submit">修改</form></td></tr>"""
+    result_string += """</table>"""
+    end_string = """
+    <form action = "/new_a_api" method = "get"><button>新增接口</button></form>
         </BODY>
     </HTML>
     """
-    return str
+    return head_string+result_string+end_string
 
 def post_selected_api_list_html_string(api_result_list):
     header = """
@@ -86,6 +103,7 @@ def post_selected_api_list_html_string(api_result_list):
     result_string += """</table>"""
 
     end = """
+    <form action = "/new_a_api" method = "get"><button>新增接口</button></form>
     </BODY>
     </HTML>
     """

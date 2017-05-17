@@ -11,6 +11,10 @@ class db_action:
         rec = self.db.cu.execute("SELECT ID, API_NAME, API_CMT, IF_VALID FROM general WHERE MODULE_ID =" + "\'"+ id + "\'")
         result_set = self.db.cu.fetchall()
         return result_set
+    def get_all_api_list(self):
+        self.db.cu.execute("SELECT ID, API_NAME, API_CMT, IF_VALID FROM general")
+        result_set = self.db.cu.fetchall()
+        return result_set
     def get_api_list_title(self, id):
         rec = self.db.cu.execute("SELECT ID, API_NAME, API_CMT, IF_VALID FROM general WHERE MODULE_ID =" + "\'"+ id + "\'")
         col_name_list = [tuple[0] for tuple in rec.description]
