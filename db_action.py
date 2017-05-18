@@ -32,10 +32,20 @@ class db_action:
             print "UPDATE general SET IF_VALID ='YES' WHERE ID =" + "\'"+ id + "\'"
             self.db.cu.execute("UPDATE general SET IF_VALID ='YES' WHERE ID =" + "\'"+ id + "\'")
             self.db.conn.commit()
+
     def get_max_id(self):
         l = []
         self.db.cu.execute("SELECT DISTINCT ID FROM general")
         result_set = self.db.cu.fetchall()
         for m in result_set:
+            l.append(int(m[0]))
+        return max(l)
+    def get_max_specific_module_id(self, module_id):
+        # print "***************" + module_id
+        l = []
+        self.db.cu.execute("SELECT DISTINCT API_ID FROM general WHERE MODULE_ID = " +"\'" + module_id + "\'")
+        result_set = self.db.cu.fetchall()
+        for m in result_set:
+            # print m[0]
             l.append(int(m[0]))
         return max(l)
