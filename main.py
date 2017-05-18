@@ -60,7 +60,7 @@ class new_a_api:
         wanted_id = make_id_key(max_id)
         wanted_max_specific_module_id = make_module_id(max_specific_module_id)
         wanted_table_name = make_table_name(module.api_add_module, wanted_max_specific_module_id)
-        print make_insert_sql(module,module_name,api,method,url,cmt,wanted_id, wanted_max_specific_module_id,wanted_table_name)
+        print make_insert_sql(module.api_add_module,module_name,api,method,url,cmt,wanted_id, wanted_max_specific_module_id,wanted_table_name)
         return web.seeother('/show_apis')
 
 if __name__=="__main__":

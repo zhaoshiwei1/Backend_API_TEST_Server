@@ -24,8 +24,8 @@ def make_module_name(module_id):
         "04":"PAY",
         "05":"UC"
     }
-    key_str = "\""+module_id+"\""
-    return values[key_str]
+
+    return values[module_id]
 
 
 def make_insert_sql(module_id,module_name, api_name, http_method, url, cmt, wanted_id, wanted_max_specific_module_id, wanted_table_name):
