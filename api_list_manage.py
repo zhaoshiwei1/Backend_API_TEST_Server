@@ -47,8 +47,9 @@ def get_no_filted_html_string(result_set):
                     </tr>
     """
     for result in result_set:
-        result_string += """<tr><td align = "left">"""+ result[0]+"""</td><td align = "left">"""+result[1]+"""</td><td align = "left">"""+result[2]+"""</td><td align = "left">"""+result[3]+"""</td>"""
-        result_string += """<td><form action = "/change_status" method = "post"><input type = "text" name = "r_id" value ="""+ "\""+ result[0]+"\""+""" style="display:none"><button type = "submit">修改</form></td></tr>"""
+        if int(result[0]) > 5 :
+            result_string += """<tr><td align = "left">"""+ result[0]+"""</td><td align = "left">"""+result[1]+"""</td><td align = "left">"""+result[2]+"""</td><td align = "left">"""+result[3]+"""</td>"""
+            result_string += """<td><form action = "/change_status" method = "post"><input type = "text" name = "r_id" value ="""+ "\""+ result[0]+"\""+""" style="display:none"><button type = "submit">修改</form></td></tr>"""
     result_string += """</table>"""
     end_string = """
     <form action = "/new_a_api" method = "get"><button>新增接口</button></form>

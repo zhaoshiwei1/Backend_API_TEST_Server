@@ -30,15 +30,17 @@ def make_module_name(module_id):
 
 def make_insert_sql(module_id,module_name, api_name, http_method, url, cmt, wanted_id, wanted_max_specific_module_id, wanted_table_name):
     sql_string = """INSERT INTO general VALUES("""
-    sql_string += ("""ID = """+"\'"+ wanted_id +"\',")
-    sql_string += ("""MODULE_ID = """+"\'"+ module_id +"\',")
-    sql_string += ("""MODULE_NAME = """+"\'"+ module_name +"\',")
-    sql_string += ("""API_ID = """+"\'"+ wanted_max_specific_module_id +"\',")
-    sql_string += ("""API_NAME = """+"\'"+ api_name +"\',")
-    sql_string += ("""API_CMT = """+"\'"+ cmt +"\',")
-    sql_string += ("""API_TB_NAME = """+"\'"+ wanted_table_name +"\',")
-    sql_string += ("""HTTP_METHOD = """+"\'"+ http_method +"\',")
-    sql_string += ("""API_URL = """+"\'"+ url +"\',")
-    sql_string += """IF_VALID =YES) """
-
+    sql_string += ("\'"+ wanted_id +"\',")
+    sql_string += ("\'"+ module_id +"\',")
+    sql_string += ("\'"+ module_name +"\',")
+    sql_string += ("\'"+ wanted_max_specific_module_id +"\',")
+    sql_string += ("\'"+ api_name +"\',")
+    sql_string += ("\'"+ cmt +"\',")
+    sql_string += ("\'"+ wanted_table_name +"\',")
+    sql_string += ("\'"+ http_method +"\',")
+    sql_string += ("\'"+ url +"\',")
+    sql_string += """'YES') """
     return sql_string
+
+def make_create_table_sql(table_name, parameter_list):
+    return 0

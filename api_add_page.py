@@ -83,7 +83,7 @@ def get_add_an_api_html_string():
         </tr>
         </table>
         <br/>
-        字段（字段名之间用逗号隔开， 例如: driver_id, ammount, service_order_id）
+        字段（字段名之间用逗号隔开， 例如: driver_id#ammount#service_order_id）
         <br/>
         <textarea rows = "15" cols = "78" name = "parameter_list"></textarea>
         <br/>

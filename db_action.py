@@ -49,3 +49,7 @@ class db_action:
             # print m[0]
             l.append(int(m[0]))
         return max(l)
+
+    def sql_execution(self, sql_string):
+        self.db.cu.execute(sql_string)
+        self.db.conn.commit()
