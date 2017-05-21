@@ -59,11 +59,11 @@ class new_a_api:
         max_specific_module_id = d_a.get_max_specific_module_id(module.api_add_module)
         wanted_id = make_id_key(max_id)
         wanted_max_specific_module_id = make_module_id(max_specific_module_id)
-        wanted_table_name = make_table_name(module.api_add_module, wanted_max_specific_module_id)
+        wanted_table_name = make_table_name(module_name, wanted_max_specific_module_id)
         sql_string = make_insert_sql(module.api_add_module,module_name,api.api_add_name,method.api_http_method,url.api_add_url,cmt.api_add_cmt,wanted_id, wanted_max_specific_module_id,wanted_table_name)
-        # print sql_string
         d_a.sql_execution(sql_string)
-        print parameters.parameter_list
+        create_api_table_sql_string =  make_create_table_sql(wanted_table_name, parameters.parameter_list)
+        d_a.sql_execution(create_api_table_sql_string)
         return web.seeother('/show_apis')
 
 if __name__=="__main__":

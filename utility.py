@@ -13,8 +13,8 @@ def make_module_id(max_specific_module_id):
     else:
         return str(max_specific_module_id+1)
 
-def make_table_name(module_id, specific_module_id):
-    return module_id + specific_module_id
+def make_table_name(module_name, specific_module_id):
+    return module_name + specific_module_id
 
 def make_module_name(module_id):
     values = {
@@ -42,5 +42,12 @@ def make_insert_sql(module_id,module_name, api_name, http_method, url, cmt, want
     sql_string += """'YES') """
     return sql_string
 
-def make_create_table_sql(table_name, parameter_list):
-    return 0
+def make_create_table_sql(table_name, parameters_string):
+    create_table_string = """"""
+    parameter_list = parameters_string.split("#")
+    create_table_string += """CREATE TABLE """ + table_name
+    create_table_string += """(ID TEXT NOT NULL,"""
+    for parameter in parameter_list:
+        create_table_string += parameter + """  TEXT NOT NULL,"""
+    create_table_string +="""PRIMARY KEY (ID))"""
+    return create_table_string

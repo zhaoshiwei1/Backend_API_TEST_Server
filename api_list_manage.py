@@ -99,8 +99,9 @@ def post_selected_api_list_html_string(api_result_list):
     result_string = """
     """
     for result in api_result_list:
-        result_string += """<tr><td align = "left">"""+ result[0]+"""</td><td align = "left">"""+result[1]+"""</td><td align = "left">"""+result[2]+"""</td><td align = "left">"""+result[3]+"""</td>"""
-        result_string += """<td><form action = "/change_status" method = "post"><input type = "text" name = "r_id" value ="""+ "\""+ result[0]+"\""+""" style="display:none"><button type = "submit">修改</form></td></tr>"""
+        if int(result[0]) > 5 :
+            result_string += """<tr><td align = "left">"""+ result[0]+"""</td><td align = "left">"""+result[1]+"""</td><td align = "left">"""+result[2]+"""</td><td align = "left">"""+result[3]+"""</td>"""
+            result_string += """<td><form action = "/change_status" method = "post"><input type = "text" name = "r_id" value ="""+ "\""+ result[0]+"\""+""" style="display:none"><button type = "submit">修改</form></td></tr>"""
     result_string += """</table>"""
 
     end = """
