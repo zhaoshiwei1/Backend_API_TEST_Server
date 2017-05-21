@@ -68,9 +68,10 @@ class new_a_api:
         create_api_table_sql_string =  make_create_table_sql(wanted_table_name, parameters.parameter_list)
         d_a.sql_execution(create_api_table_sql_string)
         return web.seeother('/show_apis')
+
 class show_test_cases:
     def GET(self):
-        print header_string
+        return header_string
 
 if __name__=="__main__":
     app = web.application(urls,globals())
