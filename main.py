@@ -8,6 +8,8 @@ from index import index_html_string
 from api_list_manage import get_no_filted_html_string
 from api_list_manage import post_selected_api_list_html_string
 from api_add_page import get_add_an_api_html_string
+from case_manage import header_string
+
 from utility import *
 
 reload(sys)
@@ -17,7 +19,8 @@ urls = (
     '/', 'index',
     '/show_apis', 'show_api_list',
     '/change_status', 'change_status',
-    '/new_a_api', 'new_a_api'
+    '/new_a_api', 'new_a_api',
+    '/show_test_cases', 'show_test_cases'
 )
 
 class index:
@@ -65,6 +68,9 @@ class new_a_api:
         create_api_table_sql_string =  make_create_table_sql(wanted_table_name, parameters.parameter_list)
         d_a.sql_execution(create_api_table_sql_string)
         return web.seeother('/show_apis')
+class show_test_cases:
+    def GET(self):
+        print header_string
 
 if __name__=="__main__":
     app = web.application(urls,globals())
