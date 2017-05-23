@@ -96,7 +96,7 @@ def get_module_filted_html_string(selected_module_id, result_set):
         else:
             filter_1 +="""<option value=""" +"\"" + id + "\">" + """----------""" + values[id] + """----------</option>"""
 
-    end_string = """
+    end_string_1 = """
 
          </select>
                         </td>
@@ -111,6 +111,13 @@ def get_module_filted_html_string(selected_module_id, result_set):
                         <td>
                             <select name = "api_list">
                                 <option value = "default">------------------------------</option>
+                                """
+    filter_2 = """"""
+    for result in result_set:
+        filter_2 += """<option value =""" +"\'"+result[0] +"\'" +""">"""  + """----------""" + result[1] + """----------</option>"""
+        print result[0]
+        print result[1]
+    end_string_2 ="""
                             </select>
                         </td>
                         <td>
@@ -123,4 +130,4 @@ def get_module_filted_html_string(selected_module_id, result_set):
         </HTML>
     """
 
-    return header_string+filter_1+end_string
+    return header_string+filter_1+end_string_1+filter_2+end_string_2
