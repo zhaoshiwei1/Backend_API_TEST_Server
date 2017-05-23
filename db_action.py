@@ -53,3 +53,8 @@ class db_action:
     def sql_execution(self, sql_string):
         self.db.cu.execute(sql_string)
         self.db.conn.commit()
+
+    def get_apis_by_module_id(self, module_id):
+        self.db.cu.execute("SELECT ID, API_NAME FROM general WHERE MODULE_ID = " +"\'"+module_id + "\'" + """AND ID <>5 AND ID<>4 AND ID<>3 AND ID<>2 AND ID <>1""")
+        result_set = self.db.cu.fetchall()
+        return result_set

@@ -8,8 +8,8 @@ from index import index_html_string
 from api_list_manage import get_no_filted_html_string
 from api_list_manage import post_selected_api_list_html_string
 from api_add_page import get_add_an_api_html_string
-from case_manage import header_string
-
+from case_manage import get_test_case_filter_html_string
+from case_manage import get_module_filted_html_string
 from utility import *
 
 reload(sys)
@@ -71,8 +71,17 @@ class new_a_api:
 
 class show_test_cases:
     def GET(self):
-        return header_string
-
+        return get_test_case_filter_html_string()
+    def POST(self):
+        d_a = db_action()
+        module = web.input('module_list')
+        api = web.input('api_list')
+        result_set = d_a.get_apis_by_module_id(module.module_list)
+        if api.api_list == 'default':
+            # print "test flag"
+            return get_module_filted_html_string(module.module_list, result_set)
+        else:
+            return 0
 if __name__=="__main__":
     app = web.application(urls,globals())
     app.run()
