@@ -10,6 +10,7 @@ from api_list_manage import post_selected_api_list_html_string
 from api_add_page import get_add_an_api_html_string
 from case_manage import get_test_case_filter_html_string
 from case_manage import get_module_filted_html_string
+from case_manage import get_api_filter_html_string
 from utility import *
 
 reload(sys)
@@ -81,7 +82,7 @@ class show_test_cases:
             # print "test flag"
             return get_module_filted_html_string(module.module_list, result_set)
         else:
-            return 0
+            return get_api_filter_html_string(module.module_list, result_set, api.api_list)
 if __name__=="__main__":
     app = web.application(urls,globals())
     app.run()
