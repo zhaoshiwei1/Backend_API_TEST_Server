@@ -69,3 +69,10 @@ class db_action:
         l.append(col_name_list)
         l.append(test_case_list)
         return l
+
+    def delete_case_by_api_and_id(self, api_id, case_id):
+        self.db.cu.execute("SELECT API_TB_NAME FROM general WHERE ID = " + "\'" + api_id + "\'")
+        result_set = self.db.cu.fetchall()
+        tb_name = result_set[0][0]
+        self.db.cu.execute("DELETE FROM " + tb_name + "WHERE ID =" + "\'" + case_id + "\'")
+        self.db.cu.commit()

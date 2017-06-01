@@ -21,7 +21,8 @@ urls = (
     '/show_apis', 'show_api_list',
     '/change_status', 'change_status',
     '/new_a_api', 'new_a_api',
-    '/show_test_cases', 'show_test_cases'
+    '/show_test_cases', 'show_test_cases',
+    '/delete_test_case', 'delete_a_test_case'
 )
 
 class index:
@@ -83,6 +84,21 @@ class show_test_cases:
             return get_module_filted_html_string(module.module_list, result_set)
         else:
             return get_api_filter_html_string(module.module_list, result_set, api.api_list)
+
+class delete_a_test_case:
+    def GET(self):
+        return get_test_case_filter_html_string()
+    def POST(self):
+        # d_a = db_action()
+        api_id = web.input('api_id')
+        case_id = web.input('case_id')
+        api_id_str = api_id.api_id
+        case_id_str = case_id.case_id
+        print api_id_str
+        print case_id_str
+        # d_a.delete_case_by_api_and_id(api_id_str,case_id_str)
+        # return get_test_case_filter_html_string()
+
 if __name__=="__main__":
     app = web.application(urls,globals())
     app.run()

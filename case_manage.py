@@ -116,8 +116,8 @@ def get_module_filted_html_string(selected_module_id, result_set):
     filter_2 = """"""
     for result in result_set:
         filter_2 += """<option value =""" +"\'"+result[0] +"\'" +""">"""  + """----------""" + result[1] + """----------</option>"""
-        print result[0]
-        print result[1]
+        # print result[0]
+        # print result[1]
     end_string_2 ="""
                             </select>
                         </td>
@@ -138,8 +138,8 @@ def get_api_filter_html_string(selected_module_id, result_set, selected_api_id):
     result_full_map = d_a.get_list_by_api_id(selected_api_id)
     col_name_list = result_full_map[0]
     test_case_list = result_full_map[1]
-    print  col_name_list
-    print  test_case_list
+    # print  col_name_list
+    # print  test_case_list
     values = {
         "01":"ORDER",
         "02":"CHARGER",
@@ -198,8 +198,8 @@ def get_api_filter_html_string(selected_module_id, result_set, selected_api_id):
     filter_2 = """"""
     for result in result_set:
         filter_2 += """<option value =""" +"\'"+result[0] +"\'" +""">"""  + """----------""" + result[1] + """----------</option>"""
-        print result[0]
-        print result[1]
+        # print result[0]
+        # print result[1]
     end_string_2 ="""
                                 </select>
                             </td>
@@ -216,15 +216,29 @@ def get_api_filter_html_string(selected_module_id, result_set, selected_api_id):
     <table width = "45%" border = "0">
     <tr>
     """
+    j = 0
     for name in col_name_list:
-        test_case_string +="""<th align = "left">""" + name + """</th>"""
-    test_case_string +="""</tr>"""
+        if j == 0:
+            test_case_string += """<th align = "left"></th>"""
+            j += 1
+        else:
+            test_case_string += """<th align = "left">""" + name + """</th>"""
+            j += 1
+    test_case_string += """<th align = "left">Action</th>"""
+    test_case_string += """</tr>"""
     for case in test_case_list:
-        test_case_string+="""<tr>"""
+        test_case_string += """<form action = "/delete_test_case" method = "post"><tr>"""
+        i = 0
         for element in case:
-            test_case_string +="""<td>""" + element + """</td>"""
-        test_case_string +="""</tr>"""
-    test_case_string +="""</table>"""
+            if i == 0:
+                test_case_string += """<td><input type = "text" name = "case_id" value = """+ "\"" + element + "\"" + """ size = "3" disabled="true" style="display:none">"""
+                test_case_string += """<input type = "text" name = "api_id" value = """ + "\"" +selected_api_id +"\""+ """ size = "3" disabled="true" style="display:none"></td>"""
+                i += 1
+            else:
+                test_case_string += """<td>""" + element + """</td>"""
+                i += 1
+        test_case_string += """<td nowrap><button type = "submit">删除</button><button type = "submit" formaction = "">修改</button></td></tr></form>"""
+    test_case_string += """</table>"""
 
     end = """
                 </BODY>
