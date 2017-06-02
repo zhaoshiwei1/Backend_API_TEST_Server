@@ -227,17 +227,25 @@ def get_api_filter_html_string(selected_module_id, result_set, selected_api_id):
     test_case_string += """<th align = "left">Action</th>"""
     test_case_string += """</tr>"""
     for case in test_case_list:
-        test_case_string += """<form action = "/delete_test_case" method = "post"><tr>"""
+        test_case_string += """<tr>"""
         i = 0
+        case_id = ""
         for element in case:
             if i == 0:
-                test_case_string += """<td><input type = "text" name = "case_id" value = """+ "\"" + element + "\"" + """ size = "3" disabled="true" style="display:none">"""
-                test_case_string += """<input type = "text" name = "api_id" value = """ + "\"" +selected_api_id +"\""+ """ size = "3" disabled="true" style="display:none"></td>"""
+                case_id += element
+                test_case_string +="""<td></td>"""
                 i += 1
             else:
                 test_case_string += """<td>""" + element + """</td>"""
                 i += 1
-        test_case_string += """<td nowrap><button type = "submit">删除</button><button type = "submit" formaction = "">修改</button></td></tr></form>"""
+        test_case_string += """<td nowrap>
+                                    <form action = "/delete_test_case" method = "post" >
+                                        <input type = "text" name = "c_id" value = """+ "\"" + case_id + "\"" + """ size = "3" disabled="true" style="display:none">
+                                        <input type = "text" name = "a_id" value = """ + "\"" + selected_api_id + "\"" + """ size = "3" disabled="true" style="display:none">
+                                        <button type = "submit">删除</button>
+                                        <button type = "submit" formaction = "">修改</button>
+                                    </form>
+                                </td></tr>"""
     test_case_string += """</table>"""
 
     end = """
