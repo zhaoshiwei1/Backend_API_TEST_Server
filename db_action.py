@@ -74,5 +74,6 @@ class db_action:
         self.db.cu.execute("SELECT API_TB_NAME FROM general WHERE ID = " + "\'" + api_id + "\'")
         result_set = self.db.cu.fetchall()
         tb_name = result_set[0][0]
-        self.db.cu.execute("DELETE FROM " + tb_name + "WHERE ID =" + "\'" + case_id + "\'")
-        self.db.cu.commit()
+        # print "DELETE FROM " + tb_name + " WHERE ID =" + "\'" + case_id + "\'"
+        self.db.cu.execute("DELETE FROM " + tb_name + " WHERE ID =" + "\'" + case_id + "\'")
+        self.db.conn.commit()

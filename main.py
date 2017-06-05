@@ -93,16 +93,10 @@ class delete_a_test_case:
         j = web.input('a_id')
         print i.c_id
         print j.a_id
-        # d_a = db_action()
-        # api_id = web.input('api_id')
-        # case_id = web.input('case_id')
-        # api_id_str = api_id.api_id
-        # case_id_str = case_id.case_id
-        # print api_id_str
-        # print case_id_str
-        # d_a.delete_case_by_api_and_id(api_id_str,case_id_str)
-        # return get_test_case_filter_html_string()
-        return 0
+        d_a = db_action()
+        d_a.delete_case_by_api_and_id(j.a_id, i.c_id)
+        return get_test_case_filter_html_string()
+
 if __name__=="__main__":
     app = web.application(urls,globals())
     app.run()
