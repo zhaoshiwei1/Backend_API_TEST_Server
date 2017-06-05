@@ -240,8 +240,8 @@ def get_api_filter_html_string(selected_module_id, result_set, selected_api_id):
                 i += 1
         test_case_string += """<td nowrap>
                                     <form action = "/delete_test_case" method = "post" >
-                                        <input type = "text" name = "c_id" value = """+ "\"" + case_id + "\"" + """ size = "3" disabled="true" style="display:none">
-                                        <input type = "text" name = "a_id" value = """ + "\"" + selected_api_id + "\"" + """ size = "3" disabled="true" style="display:none">
+                                        <input type = "text" name = "c_id" value = """ + case_id + """ style="display:none">
+                                        <input type = "text" name = "a_id" value = """ + selected_api_id + """  style="display:none" >
                                         <button type = "submit">删除</button>
                                         <button type = "submit" formaction = "">修改</button>
                                     </form>
