@@ -91,8 +91,8 @@ class delete_a_test_case:
     def POST(self):
         i = web.input('c_id')
         j = web.input('a_id')
-        print i.c_id
-        print j.a_id
+        # print i.c_id
+        # print j.a_id
         d_a = db_action()
         d_a.delete_case_by_api_and_id(j.a_id, i.c_id)
         return get_test_case_filter_html_string()
