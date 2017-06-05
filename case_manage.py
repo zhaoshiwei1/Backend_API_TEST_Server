@@ -15,8 +15,8 @@ def get_test_case_filter_html_string():
             </HEAD>
             <BODY>
                 <h1>用例管理!</h1>
-                <br/>
-                <br/>
+                <br>
+                <br>
                 <form action = "/show_test_cases" method = "post" width = "90%">
                 <table width = "30%" border = "0">
                     <tr>
@@ -248,9 +248,21 @@ def get_api_filter_html_string(selected_module_id, result_set, selected_api_id):
                                 </td></tr>"""
     test_case_string += """</table>"""
 
+    add_case_string = """
+    <br>
+    <br>
+    <form action = "/add_test_case" method = "post" >
+        <input type = "text" name = "api_id_new" value = """ + selected_api_id + """  style="display:none" >
+        <button type = "submit">新增</button>
+    </form>
+    """
+
     end = """
                 </BODY>
             </HTML>
         """
 
-    return header_string + filter_1 + end_string_1 + filter_2 + end_string_2 + test_case_string + end
+    return header_string + filter_1 + end_string_1 + filter_2 + end_string_2 + test_case_string + add_case_string + end
+
+def get_add_test_case_page_html_string(selected_api_id):
+    return 0
