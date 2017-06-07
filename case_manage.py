@@ -265,4 +265,32 @@ def get_api_filter_html_string(selected_module_id, result_set, selected_api_id):
     return header_string + filter_1 + end_string_1 + filter_2 + end_string_2 + test_case_string + add_case_string + end
 
 def get_add_test_case_page_html_string(selected_api_id):
-    return 0
+    d_a = db_action()
+    result_full_map = d_a.get_list_by_api_id(selected_api_id)
+    col_name_list = result_full_map[0]
+    test_case_info = result_full_map[2]
+    head_string1 = """
+    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+        <HTML>
+            <HEAD>
+                <meta http-equiv="X-UA-Compatible" content="IE=8" />
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <TITLE> 后台接口测试平台</TITLE>
+            </HEAD>
+            <BODY>"""
+    head_string2 = """<h1>""" + test_case_info[0] + """</h1>"""
+    head_string2 += """<h2>""" + test_case_info[1] + """</h2>"""
+    body_string = """
+    """
+    body_string += """<form action = "/submit_add_test_case" method = "post">
+        <table width = "45%" border = "0">
+    """
+    for parameter in col_name_list:
+        body_string += """<tr><td>""" + parameter + """</td>""" + """<td align = "center"> : </td>""" + """<td><input type = "text" name = """+ "\""+ parameter + "\"" +""" ></td></tr>"""
+    body_string += """</table>"""
+    body_string += """<button type = "submit">提交</button></form>"""
+    end_string = """
+    </BODY>
+    </HTML>
+    """
+    return head_string1 + head_string2 + body_string + end_string

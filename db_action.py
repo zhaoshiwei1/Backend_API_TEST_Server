@@ -68,14 +68,18 @@ class db_action:
 
     def get_list_by_api_id(self, id):
         l = []
-        self.db.cu.execute("SELECT API_TB_NAME FROM general WHERE ID = " + "\'" + id + "\'")
+        self.db.cu.execute("SELECT API_TB_NAME, API_NAME, API_CMT FROM general WHERE ID = " + "\'" + id + "\'")
         result_set = self.db.cu.fetchall()
         tb_name = result_set[0][0]
+        test_case_info = []
+        test_case_info.append(result_set[0][1])
+        test_case_info.append(result_set[0][2])
         rec = self.db.cu.execute("SELECT * FROM "+ tb_name)
         test_case_list = self.db.cu.fetchall()
         col_name_list = [tuple[0] for tuple in rec.description]
         l.append(col_name_list)
         l.append(test_case_list)
+        l.append(test_case_info)
         return l
 
     def delete_case_by_api_and_id(self, api_id, case_id):

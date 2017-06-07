@@ -11,6 +11,7 @@ from api_add_page import get_add_an_api_html_string
 from case_manage import get_test_case_filter_html_string
 from case_manage import get_module_filted_html_string
 from case_manage import get_api_filter_html_string
+from case_manage import get_add_test_case_page_html_string
 from utility import *
 
 reload(sys)
@@ -23,7 +24,8 @@ urls = (
     '/new_a_api', 'new_a_api',
     '/show_test_cases', 'show_test_cases',
     '/delete_test_case', 'delete_a_test_case',
-    '/add_test_case', 'add_a_test_case'
+    '/add_test_case', 'add_a_test_case',
+    '/submit_add_test_case', 'submit_add_test_case'
 )
 
 class index:
@@ -101,9 +103,14 @@ class delete_a_test_case:
 class add_a_test_case:
     def POST(self):
         i = web.input('api_id_new')
-        print i.api_id_new
+        return get_add_test_case_page_html_string(i.api_id_new)
+
+class submit_add_test_case:
+    def POST(self):
+        l = web.input()
+        print l
         return 0
 
-if __name__=="__main__":
-    app = web.application(urls,globals())
+if __name__ == "__main__":
+    app = web.application(urls, globals())
     app.run()
