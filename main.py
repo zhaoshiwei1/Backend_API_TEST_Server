@@ -108,7 +108,9 @@ class add_a_test_case:
 class submit_add_test_case:
     def POST(self):
         l = web.input()
-        print l
+        for element in l:
+            print element
+            print l[element]
         return 0
 
 if __name__ == "__main__":

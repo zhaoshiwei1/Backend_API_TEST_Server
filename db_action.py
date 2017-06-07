@@ -89,3 +89,8 @@ class db_action:
         # print "DELETE FROM " + tb_name + " WHERE ID =" + "\'" + case_id + "\'"
         self.db.cu.execute("DELETE FROM " + tb_name + " WHERE ID =" + "\'" + case_id + "\'")
         self.db.conn.commit()
+
+    def get_max_id_from_specific_table(self, selected_api_id):
+        self.db.cu.execute("SELECT API_TB_NAME FROM general WHERE ID = " + "\'" + selected_api_id + "\'")
+        result_set_1 = self.db.cu.fetchall()
+        tb_name = result_set_1[0][0]
