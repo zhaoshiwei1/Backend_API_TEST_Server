@@ -17,6 +17,8 @@ from utility import *
 reload(sys)
 sys.setdefaultencoding('utf8')
 
+global selected_interface_id
+
 urls = (
     '/', 'index',
     '/show_apis', 'show_api_list',
@@ -101,16 +103,26 @@ class delete_a_test_case:
         return get_test_case_filter_html_string()
 
 class add_a_test_case:
+    # it should be migration with the below interface, otherwise the selected_interface_id will be blocked
     def POST(self):
         i = web.input('api_id_new')
+        global selected_interface_id
+        selected_interface_id = i.api_id_new
         return get_add_test_case_page_html_string(i.api_id_new)
 
 class submit_add_test_case:
     def POST(self):
         l = web.input()
+        parameter_name_list = []
+        parameter_value_list = []
         for element in l:
-            print element
-            print l[element]
+            parameter_name_list.append(element)
+            parameter_value_list.append(l[element])
+        d_a = db_action()
+        wanted_id = d_a.get_max_id_from_specific_table(selected_interface_id)
+        print wanted_id
+        print parameter_name_list
+        print parameter_value_list
         return 0
 
 if __name__ == "__main__":

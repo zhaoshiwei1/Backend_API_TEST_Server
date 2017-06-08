@@ -51,3 +51,7 @@ def make_create_table_sql(table_name, parameters_string):
         create_table_string += parameter + """  TEXT NOT NULL,"""
     create_table_string +="""PRIMARY KEY (ID))"""
     return create_table_string
+
+def make_insert_sql_by_selected_api_id(tb_name, wanted_id, parameter_name_list, parameter_value_list):
+    sql_string = """"""
+

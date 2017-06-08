@@ -91,6 +91,22 @@ class db_action:
         self.db.conn.commit()
 
     def get_max_id_from_specific_table(self, selected_api_id):
+        l = []
         self.db.cu.execute("SELECT API_TB_NAME FROM general WHERE ID = " + "\'" + selected_api_id + "\'")
         result_set_1 = self.db.cu.fetchall()
         tb_name = result_set_1[0][0]
+        self.db.cu.execute("SELECT * FROM " + tb_name)
+        result_set = self.db.cu.fetchall()
+        # print result_set
+        if len(result_set) == 0:
+            return 0
+        else:
+            for m in result_set:
+                l.append(int(m[0]))
+            return max(l)+1
+
+    def insert_test_case_into_specific_table(self, selected_api_id, test_case_full_map, wanted_id):
+        self.db.cu.execute("SELECT API_TB_NAME FROM general WHERE ID = " + "\'" + selected_api_id + "\'")
+        result_set_1 = self.db.cu.fetchall()
+        tb_name = result_set_1[0][0]
+
