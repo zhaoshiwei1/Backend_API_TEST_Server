@@ -243,7 +243,7 @@ def get_api_filter_html_string(selected_module_id, result_set, selected_api_id):
                                         <input type = "text" name = "c_id" value = """ + case_id + """ style="display:none">
                                         <input type = "text" name = "a_id" value = """ + selected_api_id + """  style="display:none" >
                                         <button type = "submit">删除</button>
-                                        <button type = "submit" formaction = "">修改</button>
+                                        <button type = "submit" formaction = "/modify_test_case">修改</button>
                                     </form>
                                 </td></tr>"""
     test_case_string += """</table>"""
@@ -295,3 +295,7 @@ def get_add_test_case_page_html_string(selected_api_id):
     </HTML>
     """
     return head_string1 + head_string2 + body_string + end_string
+
+
+def get_edit_case_page_html_string(api_id, case_id, col_name_list, value_list):
+    return 0

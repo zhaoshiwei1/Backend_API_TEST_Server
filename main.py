@@ -27,7 +27,8 @@ urls = (
     '/show_test_cases', 'show_test_cases',
     '/delete_test_case', 'delete_a_test_case',
     '/add_test_case', 'add_a_test_case',
-    '/submit_add_test_case', 'submit_add_test_case'
+    '/submit_add_test_case', 'submit_add_test_case',
+    '/modify_test_case', 'modify_a_test_case'
 )
 
 class index:
@@ -125,6 +126,20 @@ class submit_add_test_case:
         # print parameter_value_list
         d_a.insert_test_case_into_specific_table(selected_interface_id, parameter_name_list, parameter_value_list, str(wanted_id))
         return get_test_case_filter_html_string()
+
+class modify_a_test_case:
+    def POST(self):
+        i = web.input()
+        api_id = i.a_id
+        case_id = i.c_id
+        d_a = db_action()
+        # print api_id
+        # print case_id
+        l = d_a.get_specific_test_case(api_id, case_id)
+        col_name_list = l[0]
+        value_list = l[1]
+
+        return 0
 
 if __name__ == "__main__":
     app = web.application(urls, globals())

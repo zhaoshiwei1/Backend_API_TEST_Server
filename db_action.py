@@ -112,3 +112,16 @@ class db_action:
         sql_string = make_insert_sql_by_selected_api_id(tb_name, wanted_id, parameter_name_list, parameter_value_list)
         self.db.cu.execute(sql_string)
         self.db.conn.commit()
+
+    def get_specific_test_case(self, api_id, case_id):
+        l = []
+        self.db.cu.execute("SELECT API_TB_NAME,  from general WHERE ID = " + "\'" + api_id + "\'")
+        result_set_1 = self.db.cu.fetchall()
+        tb_name = result_set_1[0][0]
+        # print tb_name
+        rec = self.db.cu.execute("SELECT * from " + tb_name + " WHERE ID = " + "\'" + case_id + "\'")
+        result_set_2 = self.db.cu.fetchall()
+        col_name_list = [tuple[0] for tuple in rec.description]
+        l.append(col_name_list)
+        l.append(result_set_2)
+        return l
