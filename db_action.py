@@ -1,5 +1,5 @@
 from db_module import db
-
+from utility import *
 
 class db_action:
     def __init__(self):
@@ -105,8 +105,10 @@ class db_action:
                 l.append(int(m[0]))
             return max(l)+1
 
-    def insert_test_case_into_specific_table(self, selected_api_id, test_case_full_map, wanted_id):
+    def insert_test_case_into_specific_table(self, selected_api_id, parameter_name_list, parameter_value_list, wanted_id):
         self.db.cu.execute("SELECT API_TB_NAME FROM general WHERE ID = " + "\'" + selected_api_id + "\'")
         result_set_1 = self.db.cu.fetchall()
         tb_name = result_set_1[0][0]
-
+        sql_string = make_insert_sql_by_selected_api_id(tb_name, wanted_id, parameter_name_list, parameter_value_list)
+        self.db.cu.execute(sql_string)
+        self.db.conn.commit()

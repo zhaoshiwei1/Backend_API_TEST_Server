@@ -53,5 +53,27 @@ def make_create_table_sql(table_name, parameters_string):
     return create_table_string
 
 def make_insert_sql_by_selected_api_id(tb_name, wanted_id, parameter_name_list, parameter_value_list):
-    sql_string = """"""
+    sql_string = """INSERT INTO """ + tb_name + """ ( ID, """
+    parameter_length = len(parameter_name_list)
+    value_length = len(parameter_value_list)
+    i = 0
+    j = 0
+    if parameter_length == value_length:
+        for p_name in parameter_name_list:
+            i += 1
+            if i < parameter_length:
+                sql_string += p_name + """ ,"""
+            else:
+                sql_string += p_name + """) """
+        sql_string += """VALUES (""" +"\'"+wanted_id+"\', "
+        for p_value in parameter_value_list:
+            j += 1
+            if j < value_length:
+                sql_string += "\'" + p_value + "\', "
+            else:
+                sql_string += "\'" + p_value + "\')"
+        return sql_string
+    else:
+        return "PARAMETER ERROR"
+
 

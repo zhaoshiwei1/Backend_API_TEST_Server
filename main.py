@@ -120,10 +120,11 @@ class submit_add_test_case:
             parameter_value_list.append(l[element])
         d_a = db_action()
         wanted_id = d_a.get_max_id_from_specific_table(selected_interface_id)
-        print wanted_id
-        print parameter_name_list
-        print parameter_value_list
-        return 0
+        # print wanted_id
+        # print parameter_name_list
+        # print parameter_value_list
+        d_a.insert_test_case_into_specific_table(selected_interface_id, parameter_name_list, parameter_value_list, str(wanted_id))
+        return get_test_case_filter_html_string()
 
 if __name__ == "__main__":
     app = web.application(urls, globals())
