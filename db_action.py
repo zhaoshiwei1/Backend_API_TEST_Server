@@ -115,13 +115,19 @@ class db_action:
 
     def get_specific_test_case(self, api_id, case_id):
         l = []
-        self.db.cu.execute("SELECT API_TB_NAME,  from general WHERE ID = " + "\'" + api_id + "\'")
+        test_case_info = []
+        self.db.cu.execute("SELECT API_TB_NAME, API_NAME, API_CMT from general WHERE ID = " + "\'" + api_id + "\'")
         result_set_1 = self.db.cu.fetchall()
         tb_name = result_set_1[0][0]
+        test_case_name = result_set_1[0][1]
+        test_case_cmt = result_set_1[0][1]
+        test_case_info.append(test_case_name)
+        test_case_info.append(test_case_cmt)
         # print tb_name
         rec = self.db.cu.execute("SELECT * from " + tb_name + " WHERE ID = " + "\'" + case_id + "\'")
         result_set_2 = self.db.cu.fetchall()
         col_name_list = [tuple[0] for tuple in rec.description]
+        l.append(test_case_info)
         l.append(col_name_list)
         l.append(result_set_2)
         return l

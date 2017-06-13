@@ -297,5 +297,30 @@ def get_add_test_case_page_html_string(selected_api_id):
     return head_string1 + head_string2 + body_string + end_string
 
 
-def get_edit_case_page_html_string(api_id, case_id, col_name_list, value_list):
-    return 0
+def get_edit_case_page_html_string(api_id, case_id, col_name_list, value_list, test_case_info):
+    head_string1 = """
+    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+        <HTML>
+            <HEAD>
+                <meta http-equiv="X-UA-Compatible" content="IE=8" />
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <TITLE> 后台接口测试平台</TITLE>
+            </HEAD>
+            <BODY>"""
+    head_string2 = """<h1>""" + test_case_info[0] + """</h1>"""
+    head_string2 += """<h2>""" + test_case_info[1] + """</h2>"""
+    body = """"""
+    body += """
+        <form action = "/submit_add_test_case" method = "post">
+        <table width = "45%" border = "0">
+    """
+    if len(col_name_list) == len(value_list[0]):
+        for i in range(0, len(col_name_list)):
+            if i != 0:
+                body += """<tr><td>""" + col_name_list[i] + """</td>""" + """<td align = "center"> : </td>""" + """<td><input type = "text" name = """+ "\"" + col_name_list[i] + "\"" +""" value = """ + "\"" + value_list[0][i] +"\""+ """></td></tr>"""
+        body += """</table>"""
+        end = """</table></form></BODY></HTML>"""
+        return head_string1 + head_string2 + body + end
+    else:
+        print "failed test case"
+        return 0

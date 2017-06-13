@@ -12,6 +12,7 @@ from case_manage import get_test_case_filter_html_string
 from case_manage import get_module_filted_html_string
 from case_manage import get_api_filter_html_string
 from case_manage import get_add_test_case_page_html_string
+from case_manage import get_edit_case_page_html_string
 from utility import *
 
 reload(sys)
@@ -136,10 +137,13 @@ class modify_a_test_case:
         # print api_id
         # print case_id
         l = d_a.get_specific_test_case(api_id, case_id)
-        col_name_list = l[0]
-        value_list = l[1]
-
-        return 0
+        test_case_info = l[0]
+        col_name_list = l[1]
+        test_case = l[2]
+        print test_case_info
+        print col_name_list
+        print test_case
+        return get_edit_case_page_html_string(api_id, case_id, col_name_list, test_case, test_case_info)
 
 if __name__ == "__main__":
     app = web.application(urls, globals())
