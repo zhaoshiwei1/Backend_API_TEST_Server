@@ -29,7 +29,8 @@ urls = (
     '/delete_test_case', 'delete_a_test_case',
     '/add_test_case', 'add_a_test_case',
     '/submit_add_test_case', 'submit_add_test_case',
-    '/modify_test_case', 'modify_a_test_case'
+    '/modify_test_case', 'modify_a_test_case',
+    '/submit_modify_test_case', 'submit_modify_test_case'
 )
 
 class index:
@@ -140,10 +141,18 @@ class modify_a_test_case:
         test_case_info = l[0]
         col_name_list = l[1]
         test_case = l[2]
-        print test_case_info
-        print col_name_list
-        print test_case
+        # print test_case_info
+        # print col_name_list
+        # print test_case
         return get_edit_case_page_html_string(api_id, case_id, col_name_list, test_case, test_case_info)
+
+
+class submit_modify_test_case:
+    def POST(self):
+        i = web.input()
+        print i
+        return get_test_case_filter_html_string()
+
 
 if __name__ == "__main__":
     app = web.application(urls, globals())

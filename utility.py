@@ -76,4 +76,5 @@ def make_insert_sql_by_selected_api_id(tb_name, wanted_id, parameter_name_list, 
     else:
         return "PARAMETER ERROR"
 
-
+def make_update_sql(tb_name, case_id, parameter_name_list, parameter_value_list):
+    return 0

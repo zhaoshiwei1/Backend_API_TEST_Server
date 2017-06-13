@@ -311,7 +311,7 @@ def get_edit_case_page_html_string(api_id, case_id, col_name_list, value_list, t
     head_string2 += """<h2>""" + test_case_info[1] + """</h2>"""
     body = """"""
     body += """
-        <form action = "/submit_add_test_case" method = "post">
+        <form action = "/submit_modify_test_case" method = "post">
         <table width = "45%" border = "0">
     """
     if len(col_name_list) == len(value_list[0]):
@@ -319,7 +319,12 @@ def get_edit_case_page_html_string(api_id, case_id, col_name_list, value_list, t
             if i != 0:
                 body += """<tr><td>""" + col_name_list[i] + """</td>""" + """<td align = "center"> : </td>""" + """<td><input type = "text" name = """+ "\"" + col_name_list[i] + "\"" +""" value = """ + "\"" + value_list[0][i] +"\""+ """></td></tr>"""
         body += """</table>"""
-        end = """</table></form></BODY></HTML>"""
+        body += """
+                <input type = "text" name = "c_id" value = """ + case_id + """ style="display:none">
+                <input type = "text" name = "a_id" value = """ + api_id + """  style="display:none" >
+                """
+        body += """<button type = "submit">提交</button></form>"""
+        end = """</BODY></HTML>"""
         return head_string1 + head_string2 + body + end
     else:
         print "failed test case"
