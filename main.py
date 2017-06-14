@@ -51,7 +51,7 @@ class show_api_list:
 class change_status:
     def POST(self):
         i = web.input('r_id')
-        print i.r_id
+        # print i.r_id
         d_a = db_action()
         d_a.change_api_status(i.r_id)
         return web.seeother('/show_apis')
