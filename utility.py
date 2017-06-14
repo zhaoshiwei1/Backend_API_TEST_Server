@@ -77,4 +77,11 @@ def make_insert_sql_by_selected_api_id(tb_name, wanted_id, parameter_name_list, 
         return "PARAMETER ERROR"
 
 def make_update_sql(tb_name, case_id, parameter_name_list, parameter_value_list):
-    return 0
+    sql_string = """UPDATE """ + tb_name + """ SET """
+    for i in range(0, len(parameter_name_list)):
+        if i != (len(parameter_name_list)-1):
+            sql_string += parameter_name_list[i] + " = " + "\'"+parameter_value_list[i]+"\', "
+        else:
+            sql_string += parameter_name_list[i] + " = " + "\'"+parameter_value_list[i]+"\' "
+    sql_string += """WHERE ID = """ + "\'" + case_id + "\'"
+    return sql_string

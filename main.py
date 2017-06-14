@@ -150,7 +150,20 @@ class modify_a_test_case:
 class submit_modify_test_case:
     def POST(self):
         i = web.input()
-        print i
+        a_id = i.a_id
+        c_id = i.c_id
+        parameter_name_list = []
+        parameter_value_list = []
+        for element in i:
+            if element != 'a_id' and element != 'c_id':
+                parameter_name_list.append(element)
+                parameter_value_list.append(i[element])
+        # print parameter_name_list
+        # print parameter_value_list
+        # print a_id
+        # print c_id
+        d_a = db_action()
+        d_a.update_test_case_specific_table(a_id, c_id, parameter_name_list, parameter_value_list)
         return get_test_case_filter_html_string()
 
 

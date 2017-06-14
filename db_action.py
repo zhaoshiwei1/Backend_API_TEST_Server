@@ -114,10 +114,11 @@ class db_action:
         self.db.conn.commit()
 
     def update_test_case_specific_table(self, api_id, case_id, parameter_name_list, parameter_value_list):
-        self.db.cu.execute("SELECT API_TB_NAME FROM general WHERE ID = " + "\'" + api_id + "\,")
+        self.db.cu.execute("SELECT API_TB_NAME FROM general WHERE ID = " + "\'" + api_id + "\'")
         result_set_1 = self.db.cu.fetchall()
         tb_name = result_set_1[0][0]
         sql_string = make_update_sql(tb_name, case_id, parameter_name_list, parameter_value_list)
+        # print sql_string
         self.db.cu.execute(sql_string)
         self.db.conn.commit()
 
