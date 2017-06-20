@@ -13,6 +13,7 @@ from case_manage import get_module_filted_html_string
 from case_manage import get_api_filter_html_string
 from case_manage import get_add_test_case_page_html_string
 from case_manage import get_edit_case_page_html_string
+from test_plan_manage import show_all_test_plan_html_string
 from utility import *
 
 reload(sys)
@@ -30,7 +31,9 @@ urls = (
     '/add_test_case', 'add_a_test_case',
     '/submit_add_test_case', 'submit_add_test_case',
     '/modify_test_case', 'modify_a_test_case',
-    '/submit_modify_test_case', 'submit_modify_test_case'
+    '/submit_modify_test_case', 'submit_modify_test_case',
+    '/show_test_plan', 'show_test_plan',
+    '/delete_test_plan', 'delete_a_test_plan'
 )
 
 class index:
@@ -166,6 +169,21 @@ class submit_modify_test_case:
         d_a.update_test_case_specific_table(a_id, c_id, parameter_name_list, parameter_value_list)
         return get_test_case_filter_html_string()
 
+
+class show_test_plan:
+    def GET(self):
+        d_a = db_action()
+        test_plan_list = d_a.get_test_plan_list()
+        return show_all_test_plan_html_string(test_plan_list)
+
+
+class delete_a_test_plan:
+    def POST(self):
+        i = web.input()
+        test_plan_id = i.test_plan_id
+        d_a = db_action()
+        d_a.delete_test_plan(test_plan_id)
+        return web.seeother('/show_test_plan')
 
 if __name__ == "__main__":
     app = web.application(urls, globals())

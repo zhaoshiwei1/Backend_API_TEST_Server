@@ -140,3 +140,12 @@ class db_action:
         l.append(col_name_list)
         l.append(result_set_2)
         return l
+
+    def get_test_plan_list(self):
+        self.db.cu.execute("SELECT ID, NAME, MODULE_ID from test_plan")
+        result_set = self.db.cu.fetchall()
+        return result_set
+
+    def delete_test_plan(self, test_plan_id):
+        self.db.cu.execute(" DELETE FROM test_plan WHERE ID = " + "\'" + test_plan_id + "\'")
+        self.db.conn.commit()

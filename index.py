@@ -27,7 +27,7 @@ index_html_string = """
             </tr>
             <tr>
                 <th align = "left" width = 75></th>
-                <th align = "left"><a href="/show_apis"><h3>测试执行</h3></a></th>
+                <th align = "left"><a href="/show_test_plan"><h3>测试执行</h3></a></th>
             </tr>
         </table>
     </BODY>
