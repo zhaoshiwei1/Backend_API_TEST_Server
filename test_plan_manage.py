@@ -34,7 +34,7 @@ def show_all_test_plan_html_string(test_plan_list):
                     <input type = "text" name = "module_id" value = """ + test_plan[2] + """ style = "display:none">
                     <button type = "submit">删除</button>
                     <button type = "submit" formaction = "">历史</button>
-                    <button type = "submit" formaction = "">Run</button>
+                    <button type = "submit" formaction = "/show_test_case_list" method = "post">Run</button>
                 </form>
             </td>
         </tr>
@@ -42,3 +42,8 @@ def show_all_test_plan_html_string(test_plan_list):
     body_string += """</table>"""
 
     return header_string + body_string
+
+def get_case_list_by_default(case_string):
+    header_string = """
+
+    """

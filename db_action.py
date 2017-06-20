@@ -149,3 +149,19 @@ class db_action:
     def delete_test_plan(self, test_plan_id):
         self.db.cu.execute(" DELETE FROM test_plan WHERE ID = " + "\'" + test_plan_id + "\'")
         self.db.conn.commit()
+
+    def get_active_case_string(self, test_plan_id):
+        self.db.cu.execute("SELECT ACTIVE_TEST_CASE FROM test_plan WHERE ID = " + "\'" + test_plan_id + "\'")
+        result_set = self.db.cu.fetchall()
+        return result_set[0][0]
+
+    def get_table_name_list_by_module_id(self, module_id):
+        self.db.cu.execute("SELECT API_TB_NAME FROM general WHERE MODULE_ID = " + "\'" + module_id + "\'"
+                           + """ AND IF_VALID = 'YES'""")
+        tb_name_list = self.db.cu.fetchall()
+        return tb_name_list
+
+    def get_test_case_list(self, tb_name):
+        self.db.cu.execute("SELECT ID FROM" + "\'" + tb_name + "\'")
+        test_case_id_list = self.db.cu.fetchall()
+        return test_case_id_list

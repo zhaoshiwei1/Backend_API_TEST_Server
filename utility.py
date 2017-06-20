@@ -4,6 +4,7 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
 
+# from db_action import db_action
 
 def make_id_key(max_id):
     return str(max_id+1)
@@ -93,3 +94,4 @@ def make_update_sql(tb_name, case_id, parameter_name_list, parameter_value_list)
             sql_string += parameter_name_list[i] + " = " + "\'"+parameter_value_list[i]+"\' "
     sql_string += """WHERE ID = """ + "\'" + case_id + "\'"
     return sql_string
+

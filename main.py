@@ -33,7 +33,8 @@ urls = (
     '/modify_test_case', 'modify_a_test_case',
     '/submit_modify_test_case', 'submit_modify_test_case',
     '/show_test_plan', 'show_test_plan',
-    '/delete_test_plan', 'delete_a_test_plan'
+    '/delete_test_plan', 'delete_a_test_plan',
+    '/show_test_case_list', 'show_active_test_case'
 )
 
 class index:
@@ -184,6 +185,25 @@ class delete_a_test_plan:
         d_a = db_action()
         d_a.delete_test_plan(test_plan_id)
         return web.seeother('/show_test_plan')
+
+class show_active_test_case:
+    def POST(self):
+        i = web.input()
+        module_id = i.module_id
+        test_plan_id = i.test_plan_id
+        d_a = db_action()
+        active_test_case = d_a.get_active_case_string(test_plan_id)
+        if active_test_case == '0':
+            case_string = []
+            tb_name_list = d_a.get_table_name_list_by_module_id(module_id)
+            for tb_name in tb_name_list:
+                tc_id_list = d_a.get_test_case_list(tb_name[0])
+                for tc_id in tc_id_list:
+                    case_element_string = tb_name[0]+":"+tc_id[0]
+                    case_string.append(case_element_string)
+            return case_string
+        else:
+            return 0
 
 if __name__ == "__main__":
     app = web.application(urls, globals())
