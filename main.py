@@ -15,6 +15,7 @@ from case_manage import get_add_test_case_page_html_string
 from case_manage import get_edit_case_page_html_string
 from test_plan_manage import show_all_test_plan_html_string
 from test_plan_manage import get_case_list_by_default
+from test_plan_manage import get_active_case_list
 from utility import *
 
 reload(sys)
@@ -213,15 +214,46 @@ class show_active_test_case:
             case_string.append(case_string_2)
             return get_case_list_by_default(test_plan_id, test_plan_name[0][0], case_string)
         else:
-            return 0
+            active_test_case_list = active_test_case.split("#")
+            case_string = []
+            case_string_1 = []
+            case_string_2 = []
+            tb_name_list = d_a.get_table_name_list_by_module_id(module_id)
+            for tb_name in tb_name_list:
+                tc_id_list = d_a.get_test_case_list(tb_name[0])
+                for tc_id in tc_id_list:
+                    case_element_string = tb_name[0]+":"+tc_id[0]
+                    case_string_1.append(case_element_string)
+                    case_string_2.append(tc_id[1])
+            case_string.append(case_string_1)
+            case_string.append(case_string_2)
+            # print active_test_case_list
+            return get_active_case_list(test_plan_id, test_plan_name[0][0], case_string, active_test_case_list)
 
 #
-#运行测试用例，稍后完成
+#运行测试用例模块，稍后完成并引入该类
 class run_test_case:
     def POST(self):
+        d_a = db_action()
         i = web.input(tc_id_whole=[])
-        print i.test_plan_id
-        print i.tc_id_whole
+        active_case_str = ""
+        selected_test_plan_id = i.test_plan_id
+        active_case_string_list =  i.tc_id_whole
+        # print active_case_string_list
+        # print len(active_case_string_list)
+        if len(active_case_string_list) == 0:
+            active_case_str += "0"
+        else:
+            for m in range(0, len(active_case_string_list)):
+                if m < len(active_case_string_list) - 1:
+                    active_case_str += active_case_string_list[m] + "#"
+                else:
+                    active_case_str += active_case_string_list[m]
+        # print active_case_str
+        # print selected_test_plan_id
+        d_a.update_active_case_string_to_test_plan(selected_test_plan_id, active_case_str)
+        return web.seeother('/show_test_plan')
+
 
 if __name__ == "__main__":
     app = web.application(urls, globals())

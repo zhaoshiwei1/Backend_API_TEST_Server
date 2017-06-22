@@ -172,3 +172,9 @@ class db_action:
         self.db.cu.execute("SELECT NAME from test_plan WHERE ID =" + "\'" + test_plan_id + "\'")
         test_plan_name = self.db.cu.fetchall()
         return test_plan_name
+
+
+    def update_active_case_string_to_test_plan(self, test_plan_id, active_case_string):
+        self.db.cu.execute("UPDATE test_plan SET ACTIVE_TEST_CASE = " + "\'" + active_case_string + "\'"
+                           + " WHERE ID =" + "\'"+ test_plan_id + "\'")
+        self.db.conn.commit()
