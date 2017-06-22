@@ -62,7 +62,8 @@ class db_action:
         self.db.conn.commit()
 
     def get_apis_by_module_id(self, module_id):
-        self.db.cu.execute("SELECT ID, API_NAME FROM general WHERE MODULE_ID = " +"\'"+module_id + "\'" + """AND ID <>5 AND ID<>4 AND ID<>3 AND ID<>2 AND ID <>1 AND IF_VALID ='YES'""")
+        self.db.cu.execute("SELECT ID, API_NAME FROM general WHERE MODULE_ID = " +"\'"+module_id + "\'"
+                           + """AND ID <>5 AND ID<>4 AND ID<>3 AND ID<>2 AND ID <>1 AND IF_VALID ='YES'""")
         result_set = self.db.cu.fetchall()
         return result_set
 
@@ -105,7 +106,8 @@ class db_action:
                 l.append(int(m[0]))
             return max(l)+1
 
-    def insert_test_case_into_specific_table(self, selected_api_id, parameter_name_list, parameter_value_list, wanted_id):
+    def insert_test_case_into_specific_table(self, selected_api_id, parameter_name_list,
+                                             parameter_value_list, wanted_id):
         self.db.cu.execute("SELECT API_TB_NAME FROM general WHERE ID = " + "\'" + selected_api_id + "\'")
         result_set_1 = self.db.cu.fetchall()
         tb_name = result_set_1[0][0]
@@ -162,6 +164,11 @@ class db_action:
         return tb_name_list
 
     def get_test_case_list(self, tb_name):
-        self.db.cu.execute("SELECT ID FROM" + "\'" + tb_name + "\'")
+        self.db.cu.execute("SELECT ID, test_case_name FROM" + "\'" + tb_name + "\'")
         test_case_id_list = self.db.cu.fetchall()
         return test_case_id_list
+
+    def get_test_plan_name_by_id(self, test_plan_id):
+        self.db.cu.execute("SELECT NAME from test_plan WHERE ID =" + "\'" + test_plan_id + "\'")
+        test_plan_name = self.db.cu.fetchall()
+        return test_plan_name

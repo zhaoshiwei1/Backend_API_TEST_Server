@@ -14,6 +14,7 @@ from case_manage import get_api_filter_html_string
 from case_manage import get_add_test_case_page_html_string
 from case_manage import get_edit_case_page_html_string
 from test_plan_manage import show_all_test_plan_html_string
+from test_plan_manage import get_case_list_by_default
 from utility import *
 
 reload(sys)
@@ -34,7 +35,8 @@ urls = (
     '/submit_modify_test_case', 'submit_modify_test_case',
     '/show_test_plan', 'show_test_plan',
     '/delete_test_plan', 'delete_a_test_plan',
-    '/show_test_case_list', 'show_active_test_case'
+    '/show_test_case_list', 'show_active_test_case',
+    '/run_test_case', 'run_test_case'
 )
 
 class index:
@@ -195,17 +197,31 @@ class show_active_test_case:
         test_plan_id = i.test_plan_id
         d_a = db_action()
         active_test_case = d_a.get_active_case_string(test_plan_id)
+        test_plan_name = d_a.get_test_plan_name_by_id(test_plan_id)
         if active_test_case == '0':
             case_string = []
+            case_string_1 = []
+            case_string_2 = []
             tb_name_list = d_a.get_table_name_list_by_module_id(module_id)
             for tb_name in tb_name_list:
                 tc_id_list = d_a.get_test_case_list(tb_name[0])
                 for tc_id in tc_id_list:
                     case_element_string = tb_name[0]+":"+tc_id[0]
-                    case_string.append(case_element_string)
-            return case_string
+                    case_string_1.append(case_element_string)
+                    case_string_2.append(tc_id[1])
+            case_string.append(case_string_1)
+            case_string.append(case_string_2)
+            return get_case_list_by_default(test_plan_id, test_plan_name[0][0], case_string)
         else:
             return 0
+
+#
+#运行测试用例，稍后完成
+class run_test_case:
+    def POST(self):
+        i = web.input(tc_id_whole=[])
+        print i.test_plan_id
+        print i.tc_id_whole
 
 if __name__ == "__main__":
     app = web.application(urls, globals())
