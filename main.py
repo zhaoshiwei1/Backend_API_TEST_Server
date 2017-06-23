@@ -1,6 +1,8 @@
 # -*- coding: UTF-8 -*-
 import sys
 import web
+import httplib
+import urllib
 
 from db_action import db_action
 
@@ -39,6 +41,31 @@ urls = (
     '/show_test_case_list', 'show_active_test_case',
     '/run_test_case', 'run_test_case'
 )
+
+class run_test_case_utility:
+    def __init__(self, test_plan_id):
+        self.test_plan_id = test_plan_id
+
+    def RUN(self):
+        d_a = db_action()
+        base_url = ''
+        api_url = ''
+        http_method = ''
+        parameter_name_list = []
+        parameter_value_list = []
+
+    def http_utility(self, base_url, api_url, http_method, name_list, value_list):
+        if http_method == "POST":
+            make_parameter_dic = {}
+            params = urllib.urlencode(make_parameter_dic)
+            headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
+            conn = httplib.HTTPConnection(base_url)
+            conn.request("POST", api_url, params, headers)
+            response = conn.getresponse()
+            print response.read()
+        if http_method == "GET":
+            return 0
+
 
 class index:
     def GET(self):
@@ -191,6 +218,7 @@ class delete_a_test_plan:
         d_a.delete_test_plan(test_plan_id)
         return web.seeother('/show_test_plan')
 
+
 class show_active_test_case:
     def POST(self):
         i = web.input()
@@ -232,6 +260,7 @@ class show_active_test_case:
 
 #
 #运行测试用例模块，稍后完成并引入该类
+#
 class run_test_case:
     def POST(self):
         d_a = db_action()
@@ -253,6 +282,7 @@ class run_test_case:
         # print selected_test_plan_id
         d_a.update_active_case_string_to_test_plan(selected_test_plan_id, active_case_str)
         return web.seeother('/show_test_plan')
+
 
 
 if __name__ == "__main__":
