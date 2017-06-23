@@ -943,7 +943,14 @@
       <option name="project" value="LOCAL" />
       <updated>1498188579972</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="auto save!&#10;1. finish 1/4 of the test_plan_manage function. &#10;show test case by default: done&#10;save selected test case: done&#10;add test plan: waiting&#10;show active test case: done&#10;&#10;2. run test case from test_plan active_test_case_string&#10;post utility - done&#10;get utility - ongoing auto save!">
+      <created>1498200859699</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1498200859699</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1016,7 +1023,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix the default option issue after selected!" />
     <MESSAGE value="already know the reason for the bad request, type issue" />
     <MESSAGE value="split the html and the script, fix the bad response problem!&#10;greate move!" />
     <MESSAGE value="fix the no-change-once-change-status-of-api issue" />
@@ -1041,7 +1047,8 @@
     <MESSAGE value="auto save!&#10;1. finish 1/4 of the test_plan_manage function. &#10;show test case by default: done&#10;save selected test case: ongoing&#10;add test plan: waiting&#10;show active test case: waiting&#10;&#10;2. next part is run test case from test_plan active_test_case_string" />
     <MESSAGE value="auto save!&#10;1. finish 1/4 of the test_plan_manage function. &#10;show test case by default: done&#10;save selected test case: done&#10;add test plan: waiting&#10;show active test case: done&#10;&#10;2. next part is run test case from test_plan active_test_case_string - ongoing" />
     <MESSAGE value="auto save!&#10;1. finish 1/4 of the test_plan_manage function. &#10;show test case by default: done&#10;save selected test case: done&#10;add test plan: waiting&#10;show active test case: done&#10;&#10;2. run test case from test_plan active_test_case_string&#10;post utility - done&#10;get utility - ongoing" />
-    <option name="LAST_COMMIT_MESSAGE" value="auto save!&#10;1. finish 1/4 of the test_plan_manage function. &#10;show test case by default: done&#10;save selected test case: done&#10;add test plan: waiting&#10;show active test case: done&#10;&#10;2. run test case from test_plan active_test_case_string&#10;post utility - done&#10;get utility - ongoing" />
+    <MESSAGE value="auto save!&#10;1. finish 1/4 of the test_plan_manage function. &#10;show test case by default: done&#10;save selected test case: done&#10;add test plan: waiting&#10;show active test case: done&#10;&#10;2. run test case from test_plan active_test_case_string&#10;post utility - done&#10;get utility - ongoing auto save!" />
+    <option name="LAST_COMMIT_MESSAGE" value="auto save!&#10;1. finish 1/4 of the test_plan_manage function. &#10;show test case by default: done&#10;save selected test case: done&#10;add test plan: waiting&#10;show active test case: done&#10;&#10;2. run test case from test_plan active_test_case_string&#10;post utility - done&#10;get utility - ongoing auto save!" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
