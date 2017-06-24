@@ -40,7 +40,8 @@ def show_all_test_plan_html_string(test_plan_list):
         </tr>
         """
     body_string += """</table>"""
-
+    body_string += """<a href="/add_test_plan"><h4><i>__新增测试计划__</i></h4></a>"""
+    body_string += """</BODY></HTML>"""
     return header_string + body_string
 
 def get_case_list_by_default(test_plan_id, test_plan_name, case_string):
@@ -122,3 +123,80 @@ def get_active_case_list(test_plan_id, test_plan_name, case_string, active_case_
                    + """ style = "display:none">"""
     body_string += "<button type='submit'>执行</button></form></BODY></HTML>"
     return header_string + body_string
+
+
+def get_add_test_plan_html_page():
+    head_string = """
+    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+    <HTML>
+        <HEAD>
+            <meta http-equiv="X-UA-Compatible" content="IE=8" />
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <TITLE> 后台接口测试平台</TITLE>
+        </HEAD>
+        <BODY>
+            <h2>新增测试计划!</h2>
+            <br/>
+    """
+    body_string = """
+        <form action = "/add_test_plan" method = "post">
+        <table width = "30%" border = "0">
+            <tr>
+                <td align = "right">
+                    模块
+                </td>
+                <td align = "center">
+                :
+                </td>
+                <td align = "left">
+                    <select name = "module_add_test_plan">
+                        <option value="01">----------ORDER----------</option>
+                        <option value="02">----------CHARGE----------</option>
+                        <option value="03">----------SETTLEMENT----------</option>
+                        <option value="04">----------PAY----------</option>
+                        <option value="05">----------UC----------</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td align = "right">
+                    测试计划名称
+                </td>
+                <td align = "center">
+                    :
+                </td>
+                <td align = "left">
+                    <input type = "text" name = "name_add_test_plan"/>
+                </td>
+            </tr>
+            <tr>
+                <td align = "right">
+                    BASE_URL
+                </td>
+                <td align = "center">
+                    :
+                </td>
+                <td align = "left">
+                    <input type = "text" name = "base_url_add_test_plan"/>
+                </td>
+            </tr>
+            <tr>
+                <td align = "right">
+                    所有者
+                </td>
+                <td align = "center">
+                    :
+                </td>
+                <td align = "left">
+                    <input type = "text" name = "owner_add_test_plan"/>
+                </td>
+            </tr>
+            </table>
+            <button>提交</button>
+        </form>
+        """
+    end_string = """
+        </BODY>
+        </HTML>
+        """
+    return head_string+body_string+end_string

@@ -217,3 +217,28 @@ class db_action:
         self.db.cu.execute("SELECT API_URL, HTTP_METHOD FROM general WHERE API_TB_NAME = " + "\'" + tb_name + "\'")
         result_set = self.db.cu.fetchall()
         return result_set
+
+
+    def add_new_test_plan(self, name, base_url, module_id, owner):
+        test_plan_id = self.get_max_id_from_test_plan_table()
+        sql_string = """
+        INSERT INTO test_plan VALUES (
+        """
+        sql_string += "\'" + str(test_plan_id) + "\'" + ", " + "\'" + name + "\'" + ", " + "\'" + base_url + "\'" + ", " + "\'" + module_id + "\'" + ", " + "\'" + owner + "\'"
+        sql_string += """
+        , '0', '0')
+        """
+        self.db.cu.execute(sql_string)
+        self.db.conn.commit()
+
+    def get_max_id_from_test_plan_table(self):
+        l = []
+        self.db.cu.execute("SELECT * FROM test_plan")
+        result_set = self.db.cu.fetchall()
+        # print result_set
+        if len(result_set) == 0:
+            return 0
+        else:
+            for m in result_set:
+                l.append(int(m[0]))
+            return max(l)+1

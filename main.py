@@ -18,6 +18,8 @@ from case_manage import get_edit_case_page_html_string
 from test_plan_manage import show_all_test_plan_html_string
 from test_plan_manage import get_case_list_by_default
 from test_plan_manage import get_active_case_list
+from test_plan_manage import get_add_test_plan_html_page
+
 from utility import *
 
 reload(sys)
@@ -39,7 +41,8 @@ urls = (
     '/show_test_plan', 'show_test_plan',
     '/delete_test_plan', 'delete_a_test_plan',
     '/show_test_case_list', 'show_active_test_case',
-    '/run_test_case', 'run_test_case'
+    '/run_test_case', 'run_test_case',
+    '/add_test_plan', 'add_test_plan'
 )
 
 class run_test_case_utility:
@@ -74,7 +77,18 @@ class run_test_case_utility:
             response = conn.getresponse()
             print response.read()
         if http_method == "GET":
-            return 0
+            url = "http://" + base_url + api_url + "?"
+            for num in range(0, len(name_list)):
+                if num != len(name_list)-1:
+                    url += name_list[num] + "=" + value_list[num] + "&"
+                else:
+                    url += name_list[num] + "=" + value_list[num]
+            # print url
+            conn = httplib.HTTPConnection(base_url)
+            conn.request(method="GET" , url=url)
+            response = conn.getresponse()
+            res = response.read()
+            print res
 
 
 class index:
@@ -268,9 +282,7 @@ class show_active_test_case:
             # print active_test_case_list
             return get_active_case_list(test_plan_id, test_plan_name[0][0], case_string, active_test_case_list)
 
-#
-#运行测试用例模块，稍后完成并引入该类
-#
+
 class run_test_case:
     def POST(self):
         d_a = db_action()
@@ -297,6 +309,22 @@ class run_test_case:
         return web.seeother('/show_test_plan')
 
 
+class add_test_plan:
+    def GET(self):
+        return get_add_test_plan_html_page()
+    def POST(self):
+        i = web.input()
+        name = i.name_add_test_plan
+        base_url = i.base_url_add_test_plan
+        module_id = i.module_add_test_plan
+        owner = i.owner_add_test_plan
+        # print name
+        # print base_url
+        # print module_id
+        # print owner
+        d_a = db_action()
+        d_a.add_new_test_plan(name, base_url, module_id, owner)
+        return web.seeother('/show_test_plan')
 
 if __name__ == "__main__":
     app = web.application(urls, globals())
