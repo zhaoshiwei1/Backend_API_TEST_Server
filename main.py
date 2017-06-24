@@ -50,19 +50,23 @@ class run_test_case_utility:
         d_a = db_action()
         base_url = d_a.get_base_url_by_test_plan_id(self.test_plan_id)
         active_case_list = d_a.get_active_case_list_by_test_plan_id(self.test_plan_id)
-        print base_url
+        # print base_url
         for test_case in active_case_list:
             test_case_info = d_a.get_test_case_info_by_table_name(test_case[0])
             api_url = test_case_info[0][0]
             http_method = test_case_info[0][1]
-            print api_url
-            print http_method
-        parameter_name_list = []
-        parameter_value_list = []
+            # print api_url
+            # print http_method
+            parameter = d_a.get_test_case_parameter_from_table_by_id(test_case[0], test_case[1])
+            parameter_name_list=parameter[0]
+            parameter_value_list=parameter[1]
+            self.http_utility(base_url, api_url, http_method, parameter_name_list, parameter_value_list)
 
     def http_utility(self, base_url, api_url, http_method, name_list, value_list):
         if http_method == "POST":
             make_parameter_dic = {}
+            for i in range(0, len(name_list)):
+                make_parameter_dic[name_list[i]] = value_list[i]
             params = urllib.urlencode(make_parameter_dic)
             headers = {"Content-type": "application/x-www-form-urlencoded", "Accept": "text/plain"}
             conn = httplib.HTTPConnection(base_url)

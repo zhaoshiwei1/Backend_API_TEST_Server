@@ -53,15 +53,15 @@ def make_create_table_sql(table_name, parameters_string):
     create_table_string = """"""
     parameter_list = parameters_string.split("#")
     create_table_string += """CREATE TABLE """ + table_name
-    create_table_string += """(ID TEXT NOT NULL,"""
+    create_table_string += """(TEST_CASE_ID TEXT NOT NULL,"""
     for parameter in parameter_list:
         create_table_string += parameter + """  TEXT NOT NULL,"""
-    create_table_string += """PRIMARY KEY (ID))"""
+    create_table_string += """PRIMARY KEY (TEST_CASE_ID))"""
     return create_table_string
 
 
 def make_insert_sql_by_selected_api_id(tb_name, wanted_id, parameter_name_list, parameter_value_list):
-    sql_string = """INSERT INTO """ + tb_name + """ ( ID, """
+    sql_string = """INSERT INTO """ + tb_name + """ ( TEST_CASE_ID, """
     parameter_length = len(parameter_name_list)
     value_length = len(parameter_value_list)
     i = 0
@@ -92,6 +92,6 @@ def make_update_sql(tb_name, case_id, parameter_name_list, parameter_value_list)
             sql_string += parameter_name_list[i] + " = " + "\'"+parameter_value_list[i]+"\', "
         else:
             sql_string += parameter_name_list[i] + " = " + "\'"+parameter_value_list[i]+"\' "
-    sql_string += """WHERE ID = """ + "\'" + case_id + "\'"
+    sql_string += """WHERE TEST_CASE_ID = """ + "\'" + case_id + "\'"
     return sql_string
 

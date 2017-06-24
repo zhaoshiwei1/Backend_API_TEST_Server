@@ -286,7 +286,7 @@ def get_add_test_case_page_html_string(selected_api_id):
         <table width = "45%" border = "0">
     """
     for parameter in col_name_list:
-        if parameter != "ID":
+        if parameter != "TEST_CASE_ID":
             body_string += """<tr><td>""" + parameter + """</td>""" + """<td align = "center"> : </td>""" + """<td><input type = "text" name = """+ "\""+ parameter + "\"" +""" ></td></tr>"""
     body_string += """</table>"""
     body_string += """<button type = "submit">提交</button></form>"""

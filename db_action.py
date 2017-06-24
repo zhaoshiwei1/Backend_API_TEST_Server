@@ -83,12 +83,31 @@ class db_action:
         l.append(test_case_info)
         return l
 
+    def get_test_case_parameter_from_table_by_id(self, tb_name, case_id):
+        l = []
+        parameter_name = []
+        parameter_value = []
+        rec = self.db.cu.execute("SELECT * FROM " + "\'" + tb_name + "\'" + " WHERE TEST_CASE_ID = " + "\'" + case_id + "\'")
+        parameter = self.db.cu.fetchall()
+        col_name_list = [tuple[0] for tuple in rec.description]
+        if len(parameter[0]) == len(col_name_list):
+            for i in range(0,len(parameter[0])):
+                if col_name_list[i] != "test_case_name" and col_name_list[i] != "TEST_CASE_ID":
+                    parameter_name.append(col_name_list[i])
+                    parameter_value.append(parameter[0][i])
+            l.append(parameter_name)
+            l.append(parameter_value)
+            return l
+        else:
+            return 0
+
+
     def delete_case_by_api_and_id(self, api_id, case_id):
         self.db.cu.execute("SELECT API_TB_NAME FROM general WHERE ID = " + "\'" + api_id + "\'")
         result_set = self.db.cu.fetchall()
         tb_name = result_set[0][0]
         # print "DELETE FROM " + tb_name + " WHERE ID =" + "\'" + case_id + "\'"
-        self.db.cu.execute("DELETE FROM " + tb_name + " WHERE ID =" + "\'" + case_id + "\'")
+        self.db.cu.execute("DELETE FROM " + tb_name + " WHERE TEST_CASE_ID =" + "\'" + case_id + "\'")
         self.db.conn.commit()
 
     def get_max_id_from_specific_table(self, selected_api_id):
@@ -164,7 +183,7 @@ class db_action:
         return tb_name_list
 
     def get_test_case_list(self, tb_name):
-        self.db.cu.execute("SELECT ID, test_case_name FROM" + "\'" + tb_name + "\'")
+        self.db.cu.execute("SELECT TEST_CASE_ID, test_case_name FROM" + "\'" + tb_name + "\'")
         test_case_id_list = self.db.cu.fetchall()
         return test_case_id_list
 
