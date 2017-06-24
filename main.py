@@ -48,9 +48,15 @@ class run_test_case_utility:
 
     def RUN(self):
         d_a = db_action()
-        base_url = ''
-        api_url = ''
-        http_method = ''
+        base_url = d_a.get_base_url_by_test_plan_id(self.test_plan_id)
+        active_case_list = d_a.get_active_case_list_by_test_plan_id(self.test_plan_id)
+        print base_url
+        for test_case in active_case_list:
+            test_case_info = d_a.get_test_case_info_by_table_name(test_case[0])
+            api_url = test_case_info[0][0]
+            http_method = test_case_info[0][1]
+            print api_url
+            print http_method
         parameter_name_list = []
         parameter_value_list = []
 
@@ -264,6 +270,7 @@ class show_active_test_case:
 class run_test_case:
     def POST(self):
         d_a = db_action()
+
         i = web.input(tc_id_whole=[])
         active_case_str = ""
         selected_test_plan_id = i.test_plan_id
@@ -281,6 +288,8 @@ class run_test_case:
         # print active_case_str
         # print selected_test_plan_id
         d_a.update_active_case_string_to_test_plan(selected_test_plan_id, active_case_str)
+        runner = run_test_case_utility(selected_test_plan_id)
+        runner.RUN()
         return web.seeother('/show_test_plan')
 
 

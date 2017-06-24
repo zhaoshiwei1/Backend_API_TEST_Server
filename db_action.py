@@ -178,3 +178,23 @@ class db_action:
         self.db.cu.execute("UPDATE test_plan SET ACTIVE_TEST_CASE = " + "\'" + active_case_string + "\'"
                            + " WHERE ID =" + "\'"+ test_plan_id + "\'")
         self.db.conn.commit()
+
+
+    def get_base_url_by_test_plan_id(self, test_plan_id):
+        self.db.cu.execute("SELECT BASE_URL from test_plan WHERE ID = " +"\'" + test_plan_id + "\'")
+        result_set = self.db.cu.fetchall()
+        return  result_set[0][0]
+
+    def get_active_case_list_by_test_plan_id(self, test_plan_id):
+        self.db.cu.execute("SELECT ACTIVE_TEST_CASE FROM test_plan WHERE ID = " + "\'" + test_plan_id + "\'")
+        result_set = self.db.cu.fetchall()
+        test_case_list = []
+        l = result_set[0][0].split("#")
+        for l_element in l:
+            test_case_list.append(l_element.split(":"))
+        return test_case_list
+
+    def get_test_case_info_by_table_name(self, tb_name):
+        self.db.cu.execute("SELECT API_URL, HTTP_METHOD FROM general WHERE API_TB_NAME = " + "\'" + tb_name + "\'")
+        result_set = self.db.cu.fetchall()
+        return result_set
