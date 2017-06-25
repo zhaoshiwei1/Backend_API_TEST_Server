@@ -1,7 +1,9 @@
 # -*- coding: UTF-8 -*-
+import datetime
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
+
 
 def show_all_test_plan_html_string(test_plan_list):
     header_string = """
@@ -32,8 +34,8 @@ def show_all_test_plan_html_string(test_plan_list):
                 <form action = "/delete_test_plan" method = "post">
                     <input type = "text" name = "test_plan_id" value = """ + test_plan[0] + """ style = "display:none">
                     <input type = "text" name = "module_id" value = """ + test_plan[2] + """ style = "display:none">
-                    <button type = "submit">删除</button>
-                    <button type = "submit" formaction = "">历史</button>
+                    <button type = "submit" disabled = "disabled">删除</button>
+                    <button type = "submit" formaction = "/show_test_result_history">历史</button>
                     <button type = "submit" formaction = "/show_test_case_list" method = "post">Run</button>
                 </form>
             </td>
@@ -43,6 +45,7 @@ def show_all_test_plan_html_string(test_plan_list):
     body_string += """<a href="/add_test_plan"><h4><i>__新增测试计划__</i></h4></a>"""
     body_string += """</BODY></HTML>"""
     return header_string + body_string
+
 
 def get_case_list_by_default(test_plan_id, test_plan_name, case_string):
     header_string = """
@@ -65,7 +68,7 @@ def get_case_list_by_default(test_plan_id, test_plan_name, case_string):
         <form action = "/run_test_case" method = "post">
             <table width = "35%" border = "1">
                 <th align = 'left'>
-                    <button>全选</button>
+                    <button disabled = "disabled">全选</button>
                 </th>
                 <th align = "left">
                     测试用例名
@@ -103,7 +106,7 @@ def get_active_case_list(test_plan_id, test_plan_name, case_string, active_case_
         <form action = "/run_test_case" method = "post">
             <table width = "35%" border = "1">
                 <th align = 'left'>
-                    <button>全选</button>
+                    <button disabled = "disabled">全选</button>
                 </th>
                 <th align = "left">
                     测试用例名
@@ -200,3 +203,63 @@ def get_add_test_plan_html_page():
         </HTML>
         """
     return head_string+body_string+end_string
+
+
+def get_test_result_history_html(test_result_full_map):
+    if len(test_result_full_map) == 0:
+        head_string = """
+        <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+        <HTML>
+            <HEAD>
+                <meta http-equiv="X-UA-Compatible" content="IE=8" />
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <TITLE> 后台接口测试平台</TITLE>
+            </HEAD>
+            <BODY>
+                <h2>当前测试计划无历史测试结果!</h2>
+                <br/>
+            </BODY>
+        </HTML>
+        """
+        return head_string
+    else:
+        head_string = """
+        <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+        <HTML>
+            <HEAD>
+                <meta http-equiv="X-UA-Compatible" content="IE=8" />
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <TITLE> 后台接口测试平台</TITLE>
+            </HEAD>
+            <BODY>
+                <h4>历史测试结果!</h4>
+                <br/>
+                <br/>
+        """
+        body_string = """
+        """
+        body_string += """
+        <table width = "50%" border = "0">
+        """
+        for test_report in test_result_full_map:
+            test_report_recod_id = test_report[0]
+            test_report_time_flag = test_report[1]
+            dateArray = datetime.datetime.utcfromtimestamp(int(test_report_time_flag))
+            otherStyleTime = dateArray.strftime("%Y-%m-%d %H:%M:%S")
+            body_string += """
+            <tr>
+            <td align = "left">
+            """ + otherStyleTime + """</td>"""
+            body_string += """
+            <td valign = "middle">
+                <form action = "/show_test_result_string" method = "post">
+                    <input type = "text" name = "test_report_recod_id" value = """ + test_report_recod_id + """ style = "display:none">
+                    <button type = "submit">查看</button>
+                </form>
+            </td>
+            </tr>
+                """
+        end_string = """
+            </table></BODY></HTML>
+            """
+        return head_string + body_string + end_string

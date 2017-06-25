@@ -95,3 +95,27 @@ def make_update_sql(tb_name, case_id, parameter_name_list, parameter_value_list)
     sql_string += """WHERE TEST_CASE_ID = """ + "\'" + case_id + "\'"
     return sql_string
 
+
+def make_test_report_string(base_url, api_url, http_method, parameter_name_list, parameter_value_list, response_string):
+    temp = ""
+    temp += format_line("BASE_URL", base_url) + "\r\n"
+    temp += format_line("API_URI", api_url) + "\r\n"
+    temp += format_line("HTTP_METHOD", http_method) + "\r\n"
+    for i in range(0, len(parameter_name_list)):
+        temp += format_line(parameter_name_list[i], parameter_value_list[i]) + "\r\n"
+    temp += "    " + response_string + "\r\n" + "\r\n" + "\r\n"
+    return temp
+
+
+def format_line(name, value):
+    name_line = ""
+    name_reverse =reverse3(name)
+    if len(name)<50:
+        name_line += name_reverse + (50-len(name)) * " "
+    else:
+        name_line += name_reverse
+    name_wanted = reverse3(name_line)
+    return name_wanted + " : " + value
+
+def reverse3(s):
+    return s[::-1]

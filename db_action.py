@@ -242,3 +242,37 @@ class db_action:
             for m in result_set:
                 l.append(int(m[0]))
             return max(l)+1
+
+    def add_new_record_to_test_report(self, test_plan_id, time_flag, test_report_string):
+        test_report_id = self.get_max_id_from_test_report_table()
+        sql_string = """
+        INSERT INTO TEST_REPORT VALUES (
+        """
+        sql_string += "\'" + str(test_report_id) + "\'" + ", " + "\'" + test_plan_id + "\'" + ", " + "\'" + time_flag \
+                      + "\'" + ", " + "\'" + test_report_string + "\'"
+        sql_string += """)"""
+        self.db.cu.execute(sql_string)
+        self.db.conn.commit()
+
+    def get_max_id_from_test_report_table(self):
+        l = []
+        self.db.cu.execute("SELECT * FROM TEST_REPORT")
+        result_set = self.db.cu.fetchall()
+        # print result_set
+        if len(result_set) == 0:
+            return 0
+        else:
+            for m in result_set:
+                l.append(int(m[0]))
+            return max(l)+1
+
+
+    def get_test_result_history_of_test_pan(self, test_plan_id):
+        self.db.cu.execute("SELECT ID, TIME_FLAG FROM TEST_REPORT WHERE TEST_PLAN_ID = " + "\'" + test_plan_id + "\'")
+        result_set = self.db.cu.fetchall()
+        return result_set
+
+    def get_test_report_string(self, test_report_recod_id):
+        self.db.cu.execute("SELECT TEST_RESULT FROM TEST_REPORT WHERE ID = " + "\'" + test_report_recod_id + "\'")
+        return self.db.cu.fetchall()
+

@@ -3,6 +3,7 @@ import sys
 import web
 import httplib
 import urllib
+import time
 
 from db_action import db_action
 
@@ -19,6 +20,7 @@ from test_plan_manage import show_all_test_plan_html_string
 from test_plan_manage import get_case_list_by_default
 from test_plan_manage import get_active_case_list
 from test_plan_manage import get_add_test_plan_html_page
+from test_plan_manage import get_test_result_history_html
 
 from utility import *
 
@@ -42,8 +44,11 @@ urls = (
     '/delete_test_plan', 'delete_a_test_plan',
     '/show_test_case_list', 'show_active_test_case',
     '/run_test_case', 'run_test_case',
-    '/add_test_plan', 'add_test_plan'
+    '/add_test_plan', 'add_test_plan',
+    '/show_test_result_history', 'show_test_result_history',
+    '/show_test_result_string', 'show_test_result_string'
 )
+
 
 class run_test_case_utility:
     def __init__(self, test_plan_id):
@@ -54,6 +59,7 @@ class run_test_case_utility:
         base_url = d_a.get_base_url_by_test_plan_id(self.test_plan_id)
         active_case_list = d_a.get_active_case_list_by_test_plan_id(self.test_plan_id)
         # print base_url
+        report = ""
         for test_case in active_case_list:
             test_case_info = d_a.get_test_case_info_by_table_name(test_case[0])
             api_url = test_case_info[0][0]
@@ -63,7 +69,10 @@ class run_test_case_utility:
             parameter = d_a.get_test_case_parameter_from_table_by_id(test_case[0], test_case[1])
             parameter_name_list=parameter[0]
             parameter_value_list=parameter[1]
-            self.http_utility(base_url, api_url, http_method, parameter_name_list, parameter_value_list)
+            response_string = self.http_utility(base_url, api_url, http_method, parameter_name_list, parameter_value_list)
+            report += make_test_report_string(base_url, api_url, http_method, parameter_name_list, parameter_value_list, response_string)
+        return report
+
 
     def http_utility(self, base_url, api_url, http_method, name_list, value_list):
         if http_method == "POST":
@@ -75,7 +84,7 @@ class run_test_case_utility:
             conn = httplib.HTTPConnection(base_url)
             conn.request("POST", api_url, params, headers)
             response = conn.getresponse()
-            print response.read()
+            return response.read()
         if http_method == "GET":
             url = "http://" + base_url + api_url + "?"
             for num in range(0, len(name_list)):
@@ -85,10 +94,9 @@ class run_test_case_utility:
                     url += name_list[num] + "=" + value_list[num]
             # print url
             conn = httplib.HTTPConnection(base_url)
-            conn.request(method="GET" , url=url)
+            conn.request(method="GET", url=url)
             response = conn.getresponse()
-            res = response.read()
-            print res
+            return response.read()
 
 
 class index:
@@ -305,7 +313,10 @@ class run_test_case:
         # print selected_test_plan_id
         d_a.update_active_case_string_to_test_plan(selected_test_plan_id, active_case_str)
         runner = run_test_case_utility(selected_test_plan_id)
-        runner.RUN()
+        t = time.time()
+        time_flag = str(int(t))
+        test_report = runner.RUN()
+        d_a.add_new_record_to_test_report(selected_test_plan_id, time_flag, test_report)
         return web.seeother('/show_test_plan')
 
 
@@ -325,6 +336,25 @@ class add_test_plan:
         d_a = db_action()
         d_a.add_new_test_plan(name, base_url, module_id, owner)
         return web.seeother('/show_test_plan')
+
+
+class show_test_result_history:
+    def POST(self):
+        d_a = db_action()
+        i = web.input()
+        test_plan_id = i.test_plan_id
+        test_result_history_map = d_a.get_test_result_history_of_test_pan(test_plan_id)
+        return get_test_result_history_html(test_result_history_map)
+
+
+class show_test_result_string:
+    def POST(self):
+        i = web.input()
+        test_report_recod_id = i.test_report_recod_id
+        d_a = db_action()
+        test_report = d_a.get_test_report_string(test_report_recod_id)
+        return test_report[0][0]
+
 
 if __name__ == "__main__":
     app = web.application(urls, globals())
